@@ -1,7 +1,7 @@
 Almost all programs written in this languuage is like garbage.
 
 BF was created in 1993, by Urban Müller.
-It's goal was to build a language to run on a smallest compiler.
+It's goal was to build a language to run on the smallest compiler.
 It was built for AMIGA 2.0 OS.
 It's compiler is of 170 Bytes.
     It's written under C Programming Language.

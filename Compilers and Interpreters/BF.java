@@ -1,4 +1,3 @@
-package Compilers;
 // BF.java
 
 // Usage: javac BF.java && java BF <file_path>.bf
