@@ -1,0 +1,378 @@
+Almost all programs written in this languuage is like garbage.
+
+BF was created in 1993, by Urban Müller.
+It's goal was to build a language to run on a smallest compiler.
+It was built for AMIGA 2.0 OS.
+It's compiler is of 170 Bytes.
+    It's written under C Programming Language.
+    Code:
+        s[99],*r=s,*d,c;main(a,b){char*v=1[d=b];for(;c=*v++%93;)for(b=c&2,b=c%7?a&&(c&17?c&1?(*r+=b-1):(r+=b-1):syscall(4-!b,b,r,1),0):v;b&&c|a**r;v=d)main(!c,&a);d=v;}
+    Link:
+        https://gist.github.com/lifthrasiir/596667
+
+To run .bf file in vscode:
+    VS-Code Extension to run it and have syntax configured:
+        https://marketplace.visualstudio.com/items?itemName=BabyPenguin.vscode-brainfuck
+
+    Method:
+        1> Press: Ctrl + Shift + P
+        2> Type “Brainfuck”
+        3> You’ll see several options like:
+                🟢 Brainfuck: Run
+                🟣 Brainfuck: Run (JIT)
+                🟠 Brainfuck: Debug
+
+It starts with a 30,000 byte one-dimentional array, where all values are initialized to 0.
+
+JIT (Just-In-Time) is faster but usually not needed unless you’re running heavy Brainfuck programs.
+
+Online interpreter:
+    1. https://tio.run/#brainfuck
+    2. https://sange.fi/esoteric/brainfuck/impl/interp/i.html
+    3. https://copy.sh/brainfuck/
+    4. https://www.tutorialspoint.com/compilers/online-brainfk-compiler.htm
+
+BF is an (minimal) esoteric language, it does not have a native runtime environment like languages such as Python or Java. 
+
+BF code files has ".b" or ".bf" extensions.
+
+BF Language Grammer consists of only 8 symbols:
+    + - > < [ ] , .
+
+BF don't support any other symbol except the 8 above, so we can write comments directly using other symbols as it'll just ignore those symbols, as comments.
+
+BF codes are written using only those 8 symbol and nothing else.
+    - No VARIABLES
+    - No IF STATEMENTS
+    - No FUNCTIONS
+
+Here we have,
+    a long array of numbers, which have 0's by default.
+    a cursor starts at pointing to the first number in the array.
+    > < symbols help to move cursor to right or left.
+    + - symbols are used to add 1 or remove 1 from the number.
+    , lets us read user input (one symbol at a time), storing at cursor's current location.
+        Called a comma.
+    . lets us write output (one symbol at a time), from the cursor's current location.
+        Called a period. 
+    [ ] indicates a LOOP, anything inside will be repeated until selected value becomes zero.
+
+A screen can be made out of small units called pixels.
+As the number increases the pixel turns ligher, and vice versa.
+By manipualating the pixel numbers to change their colors we can create an image.
+
+BF works with 8 bit values.
+The highest number we can achieve in Bf is 2^8=256 (.i.e, in range 0-255).
+Going over or under the end values just flip it to the other end, acting like a range loop.
+    eg. 255 + 1 = 0, 0 - 1 = 255
+
+Glider:
+    Glider is a Loop with just one arrow inside.
+    like this [>] or [<].
+    It makes cursor move continuously in one direction until it reaches zero.
+
+ASCII Code Table:
+    https://www.ascii-code.com/
+
+_____________________________________________________________________________________________________________________________________________________________
+
+Coding Methods:
+
+    Method 1:
+        Simple direct approach to print 'A'
+        If you just want to print a single character, you can directly use:
+
+        +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        .  ← prints 'A' (65 pluses)
+
+    Method 2:
+        Efficient approach using loops
+        Instead of writing 104 + for 'h',
+        we can use loops to multiply smaller counts.
+        Code:
+            ++++++++++          # set cell 0 = 10
+            [>++++++++++<-]     # multiply by 10 → cell 1 = 100
+            >++++               # add 4 more → 104
+            .                   # print 'h'
+        Explanation:
+            Start with 10 in cell 0
+            Loop runs 10 times:
+                each time, adds 10 to cell 1
+            Result: cell 1 = 10 × 10 = 100
+            Add 4 more (++++) → 104
+            Print 'h'
+
+_____________________________________________________________________________________________________________________________________________________________
+Non- Visible Characters:
+
+any control characters (NAK- Negative Acknowledge, NUL - Null Character, etc) won't' be displayed on output
+ASCII codes from 0 to 31 are controlled characters.
+ASCII Code 32 is blank space.
+
+
+
+Example code:
+    ++++ 4
+    [>+++++<-] Cell 1 = 4*5, Cell 0 = (4-1)
+    >+. Cell 1 = (20+1) output
+
+ASCII 21 (decimal form) = a control character, not a visible printable letter.
+So your code does print 21, but you won’t see anything visible — it’s not an alphabet or number.
+_____________________________________________________________________________________________________________________________________________________________
+
+
+First
+ Program:
+ Q> Write "Hi Mom":
+
+    It needs to converts each character into it's ASCII value.
+        Refernce from here: https://www.ascii-code.com/ 
+    Here,
+        "HI MOM" ==(Becomes)=⇒ 104   105   32  109  111  109
+                                H      I         M    O    M
+
+    Steps:
+        We can increment first cell,
+            first + sets up the loop counter — it makes the current cell nonzero (since [ ... ] loops only run while the current cell ≠ 0).
+            Code:
+                +
+        open a loop
+            Code:
+                +[]
+        for each iterations of loop we decrement the current cell by 5
+            Subtract 5 from cell 0 (now cell 0 = 1 - 5 = -4 → 252 in BF, but we ignore overflow logic here — it's used as a "multiplier trick")
+            Code:
+                +[-----]
+        move one cell to the right
+            Move pointer → cell 1
+            Code:
+                +[----->]
+        increment that cell by 3
+            Add 3 to cell 1
+            Code:
+                +[----->+++]
+        move back and get our of the loop
+            Move pointer back to cell 0
+            Loop ends → BF jumps back to run Loop as cell 0 ≠ 0 but = -4 or 252 (in first iteration)
+            Iterations goes as follows: 
+                iteration 0: 1 (Cell 0)    0(Cell 1) 
+                iteration 1: -4 or 252 (Cell 0)    3(Cell 1)
+                iteration 2: 248 (Cell 0)    6(Cell 1)
+                ...
+            In short,
+                we have a case where on cell 0 => 1-5*n, where n is no. of time loop runs
+                and we need to find when it reaches 0 or 256 to exit loop.
+                so the equation is,
+                        1-5n≡0(mod 256) 
+                            [or to understand similar meaning => 1-5n=0%256, but both are not same ]
+                            number "1-5n" must give remainder 0 when divided by quotient 256
+                    =>  5n = 1(mod 256)
+                            so, i shall have a number which is multiple of 256 and divisible by 5 after adding remainder (1 here)
+                            { from formula: divident = divisor * quotient + remainder }
+                    
+                    Method 2:
+                    =>  1-5n≡0(mod 256) 
+                            [or to understand similar meaning => 1-5n=0%256, but both are not same ]
+                    =>  1−5n=256k 
+                            for some integer k.
+                    =>  5n=1−256k
+                            We can find the smallest positive n satisfying this, which turned out to be n = 205.
+                            “≡ 0 (mod 256)” means “divisible by 256.”
+                            “≡ 1 (mod 256)” means “remainder 1 after dividing by 256.”
+                    Guessing,
+                        divident=divisor*quotient+remainder
+                            5n  = 256   *   k    +   1
+                                n and k shall be an integer as bits are integral values only.
+                        =>  5n  = 256   *   1    +   1  => 256+1 (or ...6+1=7) not divisible by 5 
+                        =>  5n  = 256   *   2    +   1  => 512+1 (or ...2+1 = 3) not divisible by 5
+                        =>  5n  = 256   *   3    +   1  => +1 (or ...8+1 = 9) not divisible by 5
+                        =>  5n  = 256   *   4    +   1  => +1 (or ...4+1 = 5) divisible by 5
+                                so, k = 4
+                        =>  5n = (256*4)+1
+                            5n = 1024+1
+                            n = 1025/5
+                            n = 205
+                        => So, the loop runs 205 times
+                    Testing,
+                        1−5(205)=1−1025=−1024=−4×256,
+
+            Code:
+                +[----->+++<]
+
+    Solve A×n ≡ 1 (mod 256) and then compute (B×n) % 256.
+    The loop will continue until the cell value becomes 0.
+    Let's say we have this,
+        0       1       2       3       4       5
+        _      103      _       _       _       _
+    
+    In the previous code:
+        we can move right
+            Code:
+                +[----->+++<]>
+        increment the value
+            Code:
+                +[----->+++<]>+
+        take and store input at index 1
+            Gives the letter "h" for index 1 having "104"
+            Code:
+                +[----->+++<]>+.
+        then increment and output it again
+            Gives the letter "i" for index 1 having "105" => "hi
+            Code:
+                +[----->+++<]>+.+.
+
+        Similarly, 
+            +[----->+++<]>+.+.          for "hi"
+            [--->+<]>---.               for space (" ")
+            +[----->+<]>.++.--.         for "mom"
+
+
+
+_____________________________________________________________________________________________________________________________________________________________
+
+
+Second Program:
+    Q> Write "Hello World"
+
+    Ans>
+        >+++++++++[<++++++++>-]<.>+++++++[<++++>-]<+.+++++++..+++.>>>++++++++[<++++>-]
+<.>>>++++++++++[<+++++++++>-]<---.<<<<.+++.------.--------.>>+.>++++++++++.
+
+_____________________________________________________________________________________________________________________________________________________________
+
+Looping Programs:
+    1>  Multiplication:
+        ++[>            2*
+            +           1
+        <-]
+        >.
+
+        2*1 = 2
+
+    2>  Addition:
+        ++[>                2*
+            ++[>+++<-]      6
+            ++[>+++<-]      6
+        <-]                 
+        >>+.                +1
+
+        2*(6+6)+1=25
+
+    3> Multiply Chaining (Nesting Loops):
+        ++[>                    2*
+            ++[>                2*
+                +++[>           3*
+                    +++         3
+                <-]
+            <-]
+        <-]
+        >>>.
+        
+        2*(2* (3* (3) ) ) = 2*(2* (9) ) = 2*(18) = 36
+
+    4> Joined Multiplications (optimized less nested loops) using less number of cells:
+        ++[>
+            +++
+        <-              (First Half of Multiplication Done)
+        >
+            +++
+        <-              (Second Half of Multiplication Done)
+        ]
+        >.
+        
+        OR
+
+        ++[>
+            ++++++      (Basic Approach)
+        <-]
+        >.
+
+        2*(3+3)=2*6=12
+
+    5> Clear a Cell:
+        [-]
+        or
+        [+]
+
+    6> Two cells Addition:
+        ++>             Cell0 = 2
+        +++             Cell1 = 3
+        <               Move to Cell 0
+        [               Loop Starts
+            >           Move to back Cell 1
+            +           Add 1 to Cell 1 ( Iterative Operation)
+            <           Move back to Cell 0
+            -           Minus 1 from Cell 0
+        ]
+
+_____________________________________________________________________________________________________________________________________________________________
+
+_____________________________________________________________________________________________________________________________________________________________
+Project Part:
+
+If we have a 16*16 pixel screen, we end up with 256 pixels in total.
+We can use only one pixel to represent player's position.
+
+
+~> Glider:
+    If we store it outside pixel buffer in 256th cell.
+    We need a way to convert this number to a set of cursor moving instructions.
+    Hard-coding won't work as we always need to change code to move the player.
+    Here, we use a Glider.
+
+Glider reframes the issue.
+Now we just need to fill some continuous volume of cells with positive values.
+
+example 1:
+    >[-<<[<]+[>]>]
+
+        This code:
+            moves right,
+            (entering a Loop)
+                decrements the value,
+                moves right,
+                moves right,
+                (entering a Loop)
+                    moving left until it finds 0 {Loop is a Glider to left}
+                increment the value
+                (entering a Loop)
+                    moving right until it finds 0 {Loop is a Glider to right}
+                moves right
+
+example 2:
+    <<[<]->[->]
+
+        This code:
+            moves left,
+            moves left,
+            (entering a loop)
+                moving left until it finds 0 {Loop is a Glider to left}
+            decrement the value
+            moves right
+            (entering a loop)
+                keeps derecemts and moving right until finds 0 
+ 
+Now we can keep whole joint of code inside it's own loop and change the position in code everytime loop runs.
+
+Joint Code:
+    [->+>+<<]
+    >[-<<[<]+[>]>]
+    <<[<]->[->]
+    >>[-<+<+>>]<<
+
+➥ Looping joint code:
+    [
+        [->+>+<<]
+        >[-<<[<]+[>]>]
+        <<[<]->[->]
+        >>[-<+<+>>]<<
+    ]
+
+➥ changing value everytime loop runs:
+    [
+        [->+>+<<]
+        >[-<<[<]+[>]>]
+        <<[<]->[->]
+        >>[-<+<+>>]<<
+        +
+    ]
